@@ -1,0 +1,45 @@
+pipeline {
+    agent any 
+    stages {
+        stage('Composer Install') {
+            steps {
+                sh 'composer install'
+            }
+        }
+
+        stage('Run the PHP Unit Tests under tests directory') {
+            steps {
+                sh './vendor/bin/phpunit --verbose tests'
+            }
+        }
+
+        stage('Deploy to App Servers') {
+            steps {
+                    sshPublisher(
+                        continueOnError: false, 
+                        failOnError: true,
+                        publishers: [
+                            sshPublisherDesc(
+                            configName: "appserver-0",
+                            transfers: [sshTransfer(sourceFiles: '*.php')],
+                            verbose: true
+                            ),
+                            sshPublisherDesc(
+                            configName: "appserver-1",
+                            transfers: [sshTransfer(sourceFiles: '*.php')],
+                            verbose: true
+                            )
+                            
+                    ]
+                 )
+            }
+        }
+    }
+    post {
+        failure {
+                mail to: "serhhatsari@gmail.com",
+                subject: "Pipeline Failed: ${currentBuild.fullDisplayName}",
+                body: "The pipeline ${currentBuild.fullDisplayName} has failed. Check the console output for details."
+        }
+    }
+}

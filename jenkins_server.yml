@@ -1,0 +1,42 @@
+---
+- name: Configure Jenkins Server
+  hosts: jenkins_server
+  become: true
+  vars_files:
+    - vault/vars.yml
+  tasks:
+    - name: Install Java 11
+      apt:
+        name: openjdk-11-jdk
+        update_cache: yes
+        state: present
+    
+    - name: Install Jenkins GPG key
+      apt_key:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        state: present
+
+    - name: Add Jenkins APT source
+      apt_repository:
+        repo: "deb https://pkg.jenkins.io/debian-stable binary/"
+        state: present
+        update_cache: yes
+
+    - name: Install Jenkins
+      apt:
+        name: jenkins
+        state: present
+    
+    - name: Get Jenkins admin password
+      ansible.builtin.shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+      register: jenkins_admin_password
+
+    - name: Show Jenkins admin password
+      debug:
+        msg: "Jenkins admin password is {{ jenkins_admin_password.stdout }}"
+
+    - name: Start Jenkins 
+      service:
+        name: jenkins
+        state: started
+        enabled: yes

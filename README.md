@@ -11,7 +11,7 @@ This project demonstrates a robust web application infrastructure on Google Clou
 - **CI/CD:** Implemented Jenkins to automate the test, and deployment processes, streamlining development and deployment workflows.
 
 ## Jenkins Integration
-Assume that php-project is hosted in its own dedicated GitHub repository. I have put it in this repository too to show the Jenkins pipeline. Here's how the integration works:
+Assume that php-project is hosted in its own dedicated GitHub repository. I have put it in this repository too to show the Jenkinsfile. Here's how the integration works:
 
 * **GitHub Webhook:** Whenever a new commit is pushed to this repository, GitHub initiates an automatic webhook request to Jenkins. This ensures that Jenkins remains synchronized with your development progress, allowing for continuous integration and deployment.
 

@@ -1,1 +1,3 @@
 terraform/.terraform*
+php-project/vendor/
+php-project/composer.lock

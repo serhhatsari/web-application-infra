@@ -82,7 +82,7 @@ resource "google_compute_instance" "jenkins_instance" {
 }
 
 resource "local_file" "inventory" {
-  filename = "../inventory.ini"
+  filename = "../ansible/inventory.ini"
   content = <<-EOT
     [app_servers]
     ${join("\n", [

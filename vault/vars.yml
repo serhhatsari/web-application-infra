@@ -1,2 +1,3 @@
+# encrypt it with ansible-vault
 mysql_user: mysql
 mysql_password: mysql

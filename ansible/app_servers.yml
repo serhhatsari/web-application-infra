@@ -3,7 +3,7 @@
   hosts: app_servers
   become: true
   vars_files:
-    - vault/vars.yml
+    - ../vault/vars.yml
   tasks:
     - name: Get MySQL host from inventory
       set_fact:

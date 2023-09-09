@@ -82,7 +82,7 @@ resource "google_compute_instance" "jenkins_instance" {
 }
 
 resource "local_file" "inventory" {
-  filename = "inventory.ini"
+  filename = "../inventory.ini"
   content = <<-EOT
     [app_servers]
     ${join("\n", [
@@ -102,7 +102,7 @@ resource "null_resource" "run_ansible_playbook" {
   depends_on = [local_file.inventory]
 
   provisioner "local-exec" {
-    command = "ansible-playbook main.yml --ask-vault-pass"
+    command = "ansible-playbook ../ansible/main.yml --ask-vault-pass"
   }
 }
 

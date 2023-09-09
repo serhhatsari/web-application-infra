@@ -3,7 +3,7 @@
   hosts: jenkins_server
   become: true
   vars_files:
-    - vault/vars.yml
+    - ../vault/vars.yml
   tasks:
     - name: Install Java 11
       apt:
